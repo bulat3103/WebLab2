@@ -5,17 +5,16 @@ function isNumeric(n) {
 }
 
 function validate() {
-    let message = "";
     let check = true;
     if (!validateY()) {
         check = false;
-        message += "Проверьте правильность ввода Y\n";
+        document.getElementById("y_input").style.borderColor = "#d94343";
     }
     if (!validateR()) {
         check = false;
-        message += "Проверьте правильность ввода R";
+        document.getElementById("r_input").style.borderColor = "#d94343";
     }
-    if (!check) alert(message);
+    if (!check) document.getElementById("messageArea").innerHTML = "Некорректные данные";
     return check;
 }
 
@@ -49,6 +48,9 @@ function validateR() {
 }
 
 function submit() {
+    document.getElementById("y_input").style.removeProperty("border-color");
+    document.getElementById("r_input").style.removeProperty("border-color");
+    document.getElementById("messageArea").innerHTML = "";
     if (validate()) {
         $.get("app", {
             'xVal': getX(),

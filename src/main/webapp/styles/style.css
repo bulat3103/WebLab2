@@ -70,6 +70,7 @@ body {
 .buttons {
     margin-top: 7%;
     text-align: center;
+    margin-bottom: 5%;
 }
 
 .buttons::before {
@@ -92,6 +93,13 @@ body {
 
 .button:hover {
     background-color: violet;
+}
+
+#message {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: red;
 }
 
 #table {

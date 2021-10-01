@@ -65,6 +65,9 @@
                 <input id= "checkButton" class="button" type="submit" onclick="submit()" value="Submit">
                 <input id= "clearButton" class="button" type="submit" onclick="clearTable()" value="Clear">
             </div>
+            <div id="message">
+                <label id="messageArea"></label>
+            </div>
         </td>
     </tr>
     <tr>

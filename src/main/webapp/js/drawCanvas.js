@@ -1,8 +1,14 @@
 const canvasGraph = document.getElementById('canvas');
 
 canvasGraph.addEventListener('click', function (event) {
+    document.getElementById("r_input").style.removeProperty("border-color");
+    document.getElementById("messageArea").innerHTML = "";
     let rVal = document.getElementById('r_input').value;
-    if (!validateRadius(rVal)) return;
+    if (!validateRadius(rVal)) {
+        document.getElementById("r_input").style.borderColor = "#d94343";
+        document.getElementById("messageArea").innerHTML = "Радиус не задан";
+        return;
+    }
     let xFromCanvas = (event.offsetX - 125) / 82 * rVal;
     let minDifference = Infinity;
     let nearestXValue;
