@@ -1,5 +1,9 @@
 package com.example.WebLab2;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,15 +50,8 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private String generateNewRow(double x, double y, double r, String currentTime, long executionTime, boolean isValid, boolean isHit) {
-        return "<tr>" +
-                "<td>" + x + "</td>" +
-                "<td>" + y + "</td>" +
-                "<td>" + r + "</td>" +
-                "<td>" + currentTime + "</td>" +
-                "<td>" + executionTime + "</td>" +
-                "<td>" + isValid + "</td>" +
-                "<td>" + isHit + "</td>" +
-                "</tr>";
+        String pattern = "{\"x\": \"%s\", \"y\": \"%s\", \"r\": \"%s\", \"currentTime\": \"%s\", \"executionTime\": \"%s\", \"isValid\": \"%s\", \"isHit\": \"%s\"}";
+        return String.format(pattern, x, y, r, currentTime, executionTime, isValid, isHit);
     }
 
     private String generateTable(HttpSession session) {
@@ -69,9 +66,21 @@ public class AreaCheckServlet extends HttpServlet {
                 "<th class=\"hitres_col\">Hit result</th>" +
                 "</tr>%s</table>";
         ArrayList<String> table = (ArrayList<String>) session.getAttribute(session.getId());
+        if (table == null) {
+            table = new ArrayList<>();
+        }
         StringBuilder rows = new StringBuilder();
         for (String row : table) {
-            rows.append(row);
+            JsonObject jsonObject = new Gson().fromJson(row, JsonObject.class);
+            rows.append("<tr>" +
+                    "<td>" + jsonObject.get("x").getAsString() + "</td>" +
+                    "<td>" + jsonObject.get("y").getAsString() + "</td>" +
+                    "<td>" + jsonObject.get("r").getAsString() + "</td>" +
+                    "<td>" + jsonObject.get("currentTime").getAsString() + "</td>" +
+                    "<td>" + jsonObject.get("executionTime").getAsString() + "</td>" +
+                    "<td>" + jsonObject.get("isValid").getAsString() + "</td>" +
+                    "<td>" + jsonObject.get("isHit").getAsString() + "</td>" +
+                    "</tr>");
         }
         return String.format(header, rows);
     }

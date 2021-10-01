@@ -29,7 +29,7 @@ function validateY() {
     const Y_MAX = 5;
     let yField = $('#y_input');
     let numY = yField.val().replace(',', '.');
-    if (isNumeric(numY) && numY >= Y_MIN && numY <= Y_MAX) {
+    if (isNumeric(numY) && numY > Y_MIN && numY < Y_MAX) {
         y = numY;
         return true;
     }
@@ -41,7 +41,7 @@ function validateR() {
     const R_MAX = 5;
     let rField = $('#r_input');
     let numR = rField.val().replace(',', '.');
-    if (isNumeric(numR) && numR >= R_MIN && numR <= R_MAX) {
+    if (isNumeric(numR) && numR > R_MIN && numR < R_MAX) {
         r = numR;
         return true;
     }
@@ -63,9 +63,9 @@ function submit() {
 
 function clearTable() {
     $.get("app", {
-        'clearTable': true
+        'clear': true
     }).done(function (data) {
-
+        document.getElementById("scroll").innerHTML = data;
     })
 }
 

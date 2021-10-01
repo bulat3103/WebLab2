@@ -21,7 +21,7 @@
                 <h2 class="plate_top_title">Graph</h2>
             </div>
             <div class="graph_image">
-                <img src="img/areas.png">
+                <canvas id="canvas" width="250" height="250"></canvas>
             </div>
         </td>
         <td class="content" id="values" rowspan="1">
@@ -68,7 +68,7 @@
         </td>
     </tr>
     <tr>
-        <td class="content" id="table" colspan="2">
+        <td class="contentTable" id="table" colspan="2">
             <div class="plate_top">
                 <h2 class="plate_top_title">Table</h2>
             </div>
@@ -90,5 +90,6 @@
 </table>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/main.js"></script>
+<script src="js/drawCanvas.js"></script>
 </body>
 </html>

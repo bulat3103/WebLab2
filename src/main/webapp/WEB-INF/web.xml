@@ -38,4 +38,13 @@
         <servlet-name>ClearTableServlet</servlet-name>
         <url-pattern>/clear</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoadPointsServlet</servlet-name>
+        <servlet-class>com.example.WebLab2.LoadPointsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoadPointsServlet</servlet-name>
+        <url-pattern>/loadPoints</url-pattern>
+    </servlet-mapping>
 </web-app>
