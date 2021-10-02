@@ -26,7 +26,7 @@ public class AreaCheckServlet extends HttpServlet {
         String xString = req.getParameter("xVal");
         String yString = req.getParameter("yVal");
         String rString = req.getParameter("rVal");
-        boolean isValid = validate(xString, yString, rString);
+        boolean isValid = validate(yString, rString);
         if (isValid) {
             double xValue = Double.parseDouble(xString);
             double yValue = Double.parseDouble(yString);
@@ -79,14 +79,14 @@ public class AreaCheckServlet extends HttpServlet {
                     "<td>" + jsonObject.get("currentTime").getAsString() + "</td>" +
                     "<td>" + jsonObject.get("executionTime").getAsString() + "</td>" +
                     "<td>" + jsonObject.get("isValid").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("isHit").getAsString() + "</td>" +
+                    "<td class=\"hit\">" + jsonObject.get("isHit").getAsString() + "</td>" +
                     "</tr>");
         }
         return String.format(header, rows);
     }
 
-    private boolean validate(String xString, String yString, String rString) {
-        return validateX(xString) && validateY(yString) && validateR(rString);
+    private boolean validate(String yString, String rString) {
+        return validateY(yString) && validateR(rString);
     }
 
     private boolean validateR(String rString) {
@@ -107,22 +107,12 @@ public class AreaCheckServlet extends HttpServlet {
         }
     }
 
-    private boolean validateX(String xString) {
-        try {
-            Double[] xRange = {-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
-            double xValue = Double.parseDouble(xString);
-            return Arrays.asList(xRange).contains(xValue);
-        } catch (NumberFormatException exception) {
-            return false;
-        }
-    }
-
     private boolean checkHit(double xValue, double yValue, double rValue) {
         return checkTriangle(xValue, yValue, rValue) || checkCircle(xValue, yValue, rValue) || checkRectangle(xValue, yValue, rValue);
     }
 
     private boolean checkTriangle(double xValue, double yValue, double rValue) {
-        return xValue >= 0 && yValue >= 0 && yValue <= -xValue + rValue / 2;
+        return xValue >= 0 && yValue >= 0 && yValue <= -xValue / 2 + rValue / 2;
     }
 
     private boolean checkCircle(double xValue, double yValue, double rValue) {

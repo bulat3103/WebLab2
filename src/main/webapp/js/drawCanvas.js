@@ -17,14 +17,19 @@ canvasGraph.addEventListener('click', function (event) {
     if (yFromCanvas <= -3) yFromCanvas = -3;
     else if (yFromCanvas >= 5) yFromCanvas = 5;
     $.get("app", {
-        'xVal': xFromCanvas * 100 / 100,
-        'yVal': yFromCanvas * 100 / 100,
+        'xVal': Math.floor(xFromCanvas * 100) / 100,
+        'yVal': Math.floor(yFromCanvas * 100) / 100,
         'rVal': rVal,
         'timezone': new Date().getTimezoneOffset()
     }).done(function (data) {
         document.getElementById("scroll").innerHTML = data;
+        let hits = document.getElementsByClassName("hit");
+        if (hits[hits.length - 1].innerHTML === "true") {
+            drawPoint(xFromCanvas, yFromCanvas, rVal, "#22be00");
+        } else {
+            drawPoint(xFromCanvas, yFromCanvas, rVal, "#ff0000");
+        }
     })
-    drawPoint(xFromCanvas, yFromCanvas, rVal, "#000000");
 })
 
 function loadPoints() {
