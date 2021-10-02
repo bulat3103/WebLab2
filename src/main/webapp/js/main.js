@@ -59,6 +59,12 @@ function submit() {
             'timezone': new Date().getTimezoneOffset()
         }).done(function (data) {
             document.getElementById("scroll").innerHTML = data;
+            let hits = document.getElementsByClassName("hit");
+            if (hits[hits.length - 1].innerHTML === "true") {
+                drawPoint(getX(), y, r, "#22be00");
+            } else {
+                drawPoint(getX(), y, r, "#ff0000");
+            }
         })
     }
 }
