@@ -10,28 +10,21 @@ canvasGraph.addEventListener('click', function (event) {
         return;
     }
     let xFromCanvas = (event.offsetX - 125) / 82 * rVal;
-    let minDifference = Infinity;
-    let nearestXValue;
-
-    for (let i = -3; i <= 5; i++) {
-        if (Math.abs(xFromCanvas - i ) < minDifference) {
-            minDifference = Math.abs(xFromCanvas - i );
-            nearestXValue = i;
-        }
-    }
+    if (xFromCanvas < -3) xFromCanvas = -3;
+    else if (xFromCanvas > 5) xFromCanvas = 5;
 
     let yFromCanvas = (-event.offsetY + 125) / 82 * rVal;
     if (yFromCanvas <= -3) yFromCanvas = -3;
     else if (yFromCanvas >= 5) yFromCanvas = 5;
     $.get("app", {
-        'xVal': nearestXValue,
-        'yVal': yFromCanvas,
+        'xVal': xFromCanvas * 100 / 100,
+        'yVal': yFromCanvas * 100 / 100,
         'rVal': rVal,
         'timezone': new Date().getTimezoneOffset()
     }).done(function (data) {
         document.getElementById("scroll").innerHTML = data;
     })
-    drawPoint(nearestXValue, yFromCanvas, rVal, "#000000");
+    drawPoint(xFromCanvas, yFromCanvas, rVal, "#000000");
 })
 
 function loadPoints() {

@@ -64,6 +64,7 @@
             <div class="buttons">
                 <input id= "checkButton" class="button" type="submit" onclick="submit()" value="Submit">
                 <input id= "clearButton" class="button" type="submit" onclick="clearTable()" value="Clear">
+                <input id= "exportButton" class="button" type="submit" onclick="exportToXLS()" value="Export to XLS">
             </div>
             <div id="message">
                 <label id="messageArea"></label>
@@ -94,5 +95,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/drawCanvas.js"></script>
+<script src="js/exportExcel.js"></script>
 </body>
 </html>

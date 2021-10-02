@@ -22,7 +22,7 @@ public class AreaCheckServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         HttpSession session = req.getSession();
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         String xString = req.getParameter("xVal");
         String yString = req.getParameter("yVal");
         String rString = req.getParameter("rVal");
@@ -32,7 +32,7 @@ public class AreaCheckServlet extends HttpServlet {
             double yValue = Double.parseDouble(yString);
             double rValue = Double.parseDouble(rString);
             boolean isHit = checkHit(xValue, yValue, rValue);
-            long executionTime = System.currentTimeMillis() - startTime;
+            long executionTime = System.nanoTime() - startTime;
             session.setAttribute(session.getId(), updateTable(xValue, yValue, rValue, new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()), executionTime, isValid, isHit, session));
         }
         PrintWriter printWriter = resp.getWriter();
