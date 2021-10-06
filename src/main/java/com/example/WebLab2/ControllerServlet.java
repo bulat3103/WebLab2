@@ -16,8 +16,6 @@ public class ControllerServlet extends HttpServlet {
             getServletContext().getNamedDispatcher("ClearTableServlet").forward(req, resp);
         } else if (req.getParameter("start") != null && req.getParameter("start").equals("true")){
             getServletContext().getNamedDispatcher("LoadSessionDataServlet").forward(req, resp);
-        } else if (req.getParameter("loadPoints") != null && req.getParameter("loadPoints").equals("true")) {
-            getServletContext().getNamedDispatcher("LoadPointsServlet").forward(req, resp);
         } else {
             getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
         }

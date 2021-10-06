@@ -39,16 +39,7 @@ public class LoadSessionDataServlet extends HttpServlet {
         }
         StringBuilder rows = new StringBuilder();
         for (String row : table) {
-            JsonObject jsonObject = new Gson().fromJson(row, JsonObject.class);
-            rows.append("<tr>" +
-                    "<td>" + jsonObject.get("x").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("y").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("r").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("currentTime").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("executionTime").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("isValid").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("isHit").getAsString() + "</td>" +
-                    "</tr>");
+            rows.append(row);
         }
         return String.format(header, rows);
     }

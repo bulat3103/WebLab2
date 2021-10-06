@@ -1,9 +1,5 @@
 package com.example.WebLab2;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 public class AreaCheckServlet extends HttpServlet {
@@ -26,7 +21,7 @@ public class AreaCheckServlet extends HttpServlet {
         String xString = req.getParameter("xVal");
         String yString = req.getParameter("yVal");
         String rString = req.getParameter("rVal");
-        boolean isValid = validate(yString, rString);
+        boolean isValid = validate(xString, yString, rString);
         if (isValid) {
             double xValue = Double.parseDouble(xString);
             double yValue = Double.parseDouble(yString);
@@ -50,8 +45,15 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private String generateNewRow(double x, double y, double r, String currentTime, long executionTime, boolean isValid, boolean isHit) {
-        String pattern = "{\"x\": \"%s\", \"y\": \"%s\", \"r\": \"%s\", \"currentTime\": \"%s\", \"executionTime\": \"%s\", \"isValid\": \"%s\", \"isHit\": \"%s\"}";
-        return String.format(pattern, x, y, r, currentTime, executionTime, isValid, isHit);
+        return "<tr>" +
+                "<td class=\"xRes\">" + x + "</td>" +
+                "<td class=\"yRes\">" + y + "</td>" +
+                "<td class=\"rRes\">" + r + "</td>" +
+                "<td class=\"curTimeRes\">" + currentTime + "</td>" +
+                "<td class=\"execTimeRes\">" + executionTime + "</td>" +
+                "<td class=\"valid\">" + isValid + "</td>" +
+                "<td class=\"hit\">" + isHit + "</td>" +
+                "</tr>";
     }
 
     private String generateTable(HttpSession session) {
@@ -71,28 +73,28 @@ public class AreaCheckServlet extends HttpServlet {
         }
         StringBuilder rows = new StringBuilder();
         for (String row : table) {
-            JsonObject jsonObject = new Gson().fromJson(row, JsonObject.class);
-            rows.append("<tr>" +
-                    "<td>" + jsonObject.get("x").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("y").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("r").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("currentTime").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("executionTime").getAsString() + "</td>" +
-                    "<td>" + jsonObject.get("isValid").getAsString() + "</td>" +
-                    "<td class=\"hit\">" + jsonObject.get("isHit").getAsString() + "</td>" +
-                    "</tr>");
+            rows.append(row);
         }
         return String.format(header, rows);
     }
 
-    private boolean validate(String yString, String rString) {
-        return validateY(yString) && validateR(rString);
+    private boolean validate(String xString, String yString, String rString) {
+        return validateX(xString) && validateY(yString) && validateR(rString);
     }
 
     private boolean validateR(String rString) {
         try {
             double rValue = Double.parseDouble(rString);
             return rValue > 2 && rValue < 5;
+        } catch (NumberFormatException exception) {
+            return false;
+        }
+    }
+
+    private boolean validateX(String xString) {
+        try {
+            double xValue = Double.parseDouble(xString);
+            return xValue >= -3 && xValue <= 5;
         } catch (NumberFormatException exception) {
             return false;
         }

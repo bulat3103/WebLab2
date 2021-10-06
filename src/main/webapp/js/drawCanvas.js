@@ -32,21 +32,6 @@ canvasGraph.addEventListener('click', function (event) {
     })
 })
 
-function loadPoints() {
-    $.get("app", {
-        'loadPoints': true
-    }).done(function (data) {
-        let obj = JSON.parse(data);
-        for (let i = 0; i < obj.points.length; i++) {
-            let color = "#ff0000";
-            if (obj.points[i].isHit === "true") {
-                color = "#22be00";
-            }
-            drawPoint(obj.points[i].x, obj.points[i].y, obj.points[i].r, color);
-        }
-    })
-}
-
 function drawPoint(xPosition, yPosition, radius, color) {
     yPosition = 125 - 82 * yPosition / radius;
     xPosition = 125 + 82 * xPosition / radius
@@ -127,7 +112,6 @@ function drawCanvas() {
 }
 
 drawCanvas();
-loadPoints();
 
 function validateRadius(value) {
     const R_MIN = 2;
